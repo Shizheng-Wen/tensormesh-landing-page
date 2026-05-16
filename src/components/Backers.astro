@@ -14,7 +14,7 @@ import { backers } from '../data/site';
       ETH and ETH-AI logos would crowd toward the right and push CAMLab
       visually off-center.
     -->
-    <div class="mt-8 grid grid-cols-3 items-center gap-6 sm:gap-10">
+    <div class="mt-8 grid grid-cols-3 items-center gap-4 sm:gap-10">
       {backers.map((b) => (
         <a
           href={b.href}
@@ -26,7 +26,7 @@ import { backers } from '../data/site';
           <img
             src={b.logo}
             alt={b.name}
-            class="h-12 sm:h-14 w-auto"
+            class="h-10 sm:h-14 w-auto max-w-full"
           />
         </a>
       ))}

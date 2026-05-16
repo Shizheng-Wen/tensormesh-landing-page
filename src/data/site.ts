@@ -241,6 +241,71 @@ u = condenser.recover(K_.solve(b_))
 `;
 
 // ---------------------------------------------------------------------------
+// M4 — Examples gallery (8 categories)
+// ---------------------------------------------------------------------------
+
+// Each category links to its docs section. Counts come from a manual sweep
+// of the examples/ folder; bump them as the gallery grows.
+export const exampleCategories = [
+  {
+    label: 'Basics',
+    icon: 'basics',
+    description: 'Mesh viz, basis functions, element gallery.',
+    count: '1 example',
+    href: links.docs + '/example_gallery/basics.html',
+  },
+  {
+    label: 'Poisson',
+    icon: 'poisson',
+    description: '2D/3D Poisson, batched RHS, h-adaptivity.',
+    count: '3+ examples',
+    href: links.docs + '/example_gallery/poisson.html',
+  },
+  {
+    label: 'Diffusion',
+    icon: 'diffusion',
+    description: 'Heat equation and Allen–Cahn phase field.',
+    count: '2 examples',
+    href: links.docs + '/example_gallery/diffusion.html',
+  },
+  {
+    label: 'Wave',
+    icon: 'wave',
+    description: 'Explicit central-difference time integration.',
+    count: '1 example',
+    href: links.docs + '/example_gallery/wave.html',
+  },
+  {
+    label: 'Fluid',
+    icon: 'fluid',
+    description: 'Lid-driven cavity, cylinder flow, Rayleigh–Bénard, Taylor–Green.',
+    count: '4 examples',
+    href: links.docs + '/example_gallery/fluid/index.html',
+  },
+  {
+    label: 'Solid',
+    icon: 'solid',
+    description: 'Hyperelasticity, contact, plasticity, large deformation.',
+    count: '7 examples',
+    href: links.docs + '/example_gallery/solid/index.html',
+  },
+  {
+    label: 'Dataset',
+    icon: 'dataset',
+    description: 'Batch mesh & field generation for ML training.',
+    count: '1 example',
+    href: links.docs + '/example_gallery/dataset.html',
+  },
+  {
+    label: 'Distributed',
+    icon: 'distributed',
+    description: 'Multi-GPU assembly and mesh partitioning.',
+    count: '1 example',
+    href: links.docs + '/example_gallery/distributed.html',
+  },
+];
+
+// ---------------------------------------------------------------------------
 // Community
 // ---------------------------------------------------------------------------
 
