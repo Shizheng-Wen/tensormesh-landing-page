@@ -1,0 +1,55 @@
+---
+import { benchmarks } from '../data/site';
+---
+
+<section class="bg-white py-20 sm:py-24">
+  <div class="mx-auto max-w-6xl px-6">
+    <div class="text-center">
+      <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-ink">
+        Speed without compromises
+      </h2>
+      <p class="mx-auto mt-4 max-w-3xl text-base sm:text-lg text-muted">
+        Benchmarked against
+        {benchmarks.competitors.map((c, i) => (
+          <>
+            <span class="font-semibold text-ink">{c}</span>{
+              i === benchmarks.competitors.length - 1
+                ? ''
+                : i === benchmarks.competitors.length - 2
+                  ? ', and '
+                  : ', '
+            }
+          </>
+        ))}
+        on 3D Poisson, linear elasticity, and topology optimization.
+      </p>
+    </div>
+
+    <div class="mt-14 grid grid-cols-1 gap-8 md:grid-cols-2">
+      {benchmarks.plots.map((p) => (
+        <figure class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm hover:shadow-md transition">
+          <img
+            src={p.src}
+            alt={p.title}
+            loading="lazy"
+            decoding="async"
+            class="w-full h-auto rounded-md"
+          />
+          <figcaption class="mt-4 px-1">
+            <h3 class="text-sm font-semibold text-ink">{p.title}</h3>
+            <p class="mt-1 text-sm text-muted">{p.caption}</p>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+
+    <div class="mt-10 text-center">
+      <a
+        href={benchmarks.fullBenchUrl}
+        class="inline-flex items-center gap-1 text-sm font-semibold text-tmblue hover:text-tmteal transition"
+      >
+        See full benchmark suite →
+      </a>
+    </div>
+  </div>
+</section>

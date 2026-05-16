@@ -1,0 +1,62 @@
+---
+import { Code } from 'astro:components';
+import { quickstartCode, links } from '../data/site';
+---
+
+<section class="bg-surface-alt py-20 sm:py-24">
+  <div class="mx-auto max-w-6xl px-6">
+    <div class="text-center">
+      <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-ink">
+        From mesh to solution in pure&nbsp;Python
+      </h2>
+      <p class="mx-auto mt-4 max-w-2xl text-base sm:text-lg text-muted">
+        A complete Poisson solver — no DSL, no JIT, no surprises. Just PyTorch
+        autograd flowing through every step.
+      </p>
+    </div>
+
+    <div class="mt-14 grid grid-cols-1 gap-8 lg:grid-cols-5 lg:items-center">
+      <!-- Code (3/5 width on desktop) -->
+      <div class="lg:col-span-3 rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-sm">
+        <div class="flex items-center gap-1.5 border-b border-slate-200 bg-surface-alt px-4 py-2.5">
+          <span class="h-2.5 w-2.5 rounded-full bg-red-400"></span>
+          <span class="h-2.5 w-2.5 rounded-full bg-yellow-400"></span>
+          <span class="h-2.5 w-2.5 rounded-full bg-green-400"></span>
+          <span class="ml-2 font-mono text-xs text-muted">quickstart.py</span>
+        </div>
+        <div class="text-xs sm:text-sm leading-relaxed [&>pre]:!bg-white [&>pre]:!p-5 [&>pre]:!m-0 [&>pre]:overflow-x-auto">
+          <Code code={quickstartCode} lang="python" theme="github-light" />
+        </div>
+      </div>
+
+      <!-- Result image + caption (2/5 width on desktop) -->
+      <div class="lg:col-span-2">
+        <div class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+          <img
+            src="/assets/poisson_quickstart.png"
+            alt="Numerical solution u(x, y) = sin(πx)sin(πy) on the unit square"
+            loading="lazy"
+            decoding="async"
+            class="w-full h-auto rounded-md"
+          />
+        </div>
+        <div class="mt-4 rounded-lg bg-ink p-4 font-mono text-xs text-slate-100">
+          <span class="text-tmteal">$</span> python quickstart.py<br />
+          <span class="text-slate-400">L2 error: 3.162e-03</span>
+        </div>
+        <p class="mt-5 text-sm text-muted leading-relaxed">
+          The same script runs unchanged on GPU with
+          <code class="font-mono text-tmblue">mesh = mesh.cuda()</code>, and
+          becomes differentiable with
+          <code class="font-mono text-tmblue">mesh.points.requires_grad_(True)</code>.
+        </p>
+        <a
+          href={links.docs + '/getting_started/quickstart.html'}
+          class="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-tmblue hover:text-tmteal transition"
+        >
+          Read the full quickstart →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
