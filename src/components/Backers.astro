@@ -1,0 +1,35 @@
+---
+import { backers } from '../data/site';
+---
+
+<section class="bg-white py-14 sm:py-16">
+  <div class="mx-auto max-w-5xl px-6">
+    <p class="text-center text-xs font-semibold uppercase tracking-widest text-muted">
+      Developed at
+    </p>
+
+    <!--
+      Use grid-cols-3 so each logo gets equal horizontal real estate
+      regardless of its intrinsic aspect ratio. With flex+gap, the wider
+      ETH and ETH-AI logos would crowd toward the right and push CAMLab
+      visually off-center.
+    -->
+    <div class="mt-8 grid grid-cols-3 items-center gap-6 sm:gap-10">
+      {backers.map((b) => (
+        <a
+          href={b.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex justify-center opacity-90 hover:opacity-100 transition"
+          aria-label={b.name}
+        >
+          <img
+            src={b.logo}
+            alt={b.name}
+            class="h-12 sm:h-14 w-auto"
+          />
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

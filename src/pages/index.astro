@@ -1,11 +1,20 @@
 ---
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
+import Backers from '../components/Backers.astro';
+import Features from '../components/Features.astro';
+import GetStarted from '../components/GetStarted.astro';
+import Community from '../components/Community.astro';
 import Footer from '../components/Footer.astro';
 ---
 
 <Base>
   <Hero />
-  <!-- M2 sections will plug in here: Backers, Features, Gallery, CodeDemo, Benchmarks, Examples, GetStarted, Community -->
+  <Backers />
+  <Features />
+  <!-- M3 sections will slot here: Gallery, CodeDemo, Benchmarks -->
+  <!-- M4 section will slot here: Examples -->
+  <GetStarted />
+  <Community />
   <Footer />
 </Base>

@@ -1,0 +1,54 @@
+---
+import { features } from '../data/site';
+
+// Map icon keys to inline SVG paths (Heroicons / Lucide style, 24x24, stroke).
+const iconPaths: Record<string, string> = {
+  gpu: 'M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2zM9 9h6v6H9z',
+  autograd: 'M4 4v6h6M20 20v-6h-6M20 4l-8 8M4 20l8-8',
+  bolt: 'M13 2 4 14h7l-1 8 9-12h-7l1-8z',
+  python: 'm8 6-6 6 6 6M16 6l6 6-6 6',
+  elements: 'M12 2 3 7v10l9 5 9-5V7l-9-5zM3 7l9 5 9-5M12 12v10',
+  solvers: 'M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z',
+};
+---
+
+<section class="bg-surface-alt py-20 sm:py-24">
+  <div class="mx-auto max-w-6xl px-6">
+    <div class="text-center">
+      <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-ink">
+        Why <span class="text-tmblue">Tensor</span><span class="text-tmteal">Mesh</span>
+      </h2>
+      <p class="mx-auto mt-4 max-w-2xl text-base sm:text-lg text-muted">
+        Built for the workflow where finite elements meet deep learning — without
+        sacrificing the speed and accuracy you expect from a real FEM library.
+      </p>
+    </div>
+
+    <div class="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {features.map((f) => (
+        <div
+          class="group rounded-2xl border border-slate-200 bg-white p-7 shadow-sm hover:shadow-md hover:border-tmblue/40 transition"
+        >
+          <div
+            class="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-tmblue-soft text-tmblue group-hover:bg-tmblue group-hover:text-white transition"
+          >
+            <svg
+              class="h-6 w-6"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d={iconPaths[f.icon]} />
+            </svg>
+          </div>
+          <h3 class="mt-5 text-lg font-semibold text-ink">{f.title}</h3>
+          <p class="mt-2 text-sm leading-relaxed text-muted">{f.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

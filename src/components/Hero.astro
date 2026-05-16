@@ -76,17 +76,66 @@ import { site, heroPrimaryCTAs, heroCommandCTAs } from '../data/site';
       })}
     </div>
 
-    <!-- Row 2: command-line snippets -->
+    <!-- Row 2: command-line snippets (click to copy) -->
     <div class="mt-5 flex flex-wrap items-center justify-center gap-3">
       {heroCommandCTAs.map((cta) => (
-        <a
-          href={cta.href}
-          class="inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white/70 backdrop-blur px-4 py-2.5 font-mono text-xs sm:text-sm text-ink shadow-sm hover:border-tmteal hover:text-tmteal transition"
+        <button
+          type="button"
+          data-copy={cta.command}
+          aria-label={`Copy: ${cta.command}`}
+          class="copy-btn group inline-flex items-center gap-2 rounded-md border border-slate-200 bg-white/70 backdrop-blur px-4 py-2.5 font-mono text-xs sm:text-sm text-ink shadow-sm hover:border-tmteal hover:text-tmteal transition cursor-pointer"
         >
           <span class="text-tmteal select-none">$</span>
-          <span class="truncate max-w-[16rem] sm:max-w-none">{cta.command}</span>
-        </a>
+          <span data-copy-text class="truncate max-w-[16rem] sm:max-w-none">{cta.command}</span>
+          <!-- Copy icon (shown by default), check icon (shown after copy) -->
+          <svg data-copy-icon class="h-3.5 w-3.5 text-muted group-hover:text-tmteal transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+          <svg data-check-icon class="hidden h-3.5 w-3.5 text-tmteal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </button>
       ))}
     </div>
   </div>
 </section>
+
+<script>
+  // Click-to-copy for command snippets. Falls back gracefully if the
+  // Async Clipboard API is unavailable (e.g. non-secure context).
+  document.querySelectorAll<HTMLButtonElement>('button.copy-btn').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const text = btn.dataset.copy;
+      if (!text) return;
+      const label = btn.querySelector<HTMLElement>('[data-copy-text]');
+      const copyIcon = btn.querySelector<HTMLElement>('[data-copy-icon]');
+      const checkIcon = btn.querySelector<HTMLElement>('[data-check-icon]');
+      if (!label || !copyIcon || !checkIcon) return;
+
+      const originalText = label.textContent ?? '';
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch {
+        // Fallback: select-and-execCommand for older browsers
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand('copy'); } catch {}
+        document.body.removeChild(ta);
+      }
+
+      label.textContent = 'Copied!';
+      copyIcon.classList.add('hidden');
+      checkIcon.classList.remove('hidden');
+      setTimeout(() => {
+        label.textContent = originalText;
+        copyIcon.classList.remove('hidden');
+        checkIcon.classList.add('hidden');
+      }, 1500);
+    });
+  });
+</script>
