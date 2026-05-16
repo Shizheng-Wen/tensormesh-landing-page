@@ -8,6 +8,7 @@ import '@fontsource/jetbrains-mono/500.css';
 
 import '../styles/global.css';
 import { site } from '../data/site';
+import TopNav from '../components/TopNav.astro';
 
 interface Props {
   title?: string;
@@ -45,6 +46,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? `https://${site.doma
     <meta name="twitter:description" content={description} />
   </head>
   <body class="min-h-screen flex flex-col bg-surface text-ink">
+    <TopNav />
     <main class="flex-1">
       <slot />
     </main>

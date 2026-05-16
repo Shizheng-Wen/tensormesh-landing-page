@@ -246,22 +246,29 @@ u = condenser.recover(K_.solve(b_))
 
 export const communityChannels = [
   {
-    label: 'Discord',
-    description: 'Real-time chat, help channels, and showcase.',
+    label: 'Join Discord',
+    subtitle: 'Real-time help & discussions',
     href: links.discord,
     icon: 'discord',
+    // Discord brand blurple — used as the icon tile background.
+    iconBg: 'bg-[#5865F2]',
+    iconColor: 'text-white',
   },
   {
     label: 'GitHub Discussions',
-    description: 'Announcements, Q&A, ideas and RFCs.',
+    subtitle: 'Searchable Q&A knowledge base',
     href: links.discussions,
     icon: 'discussions',
+    iconBg: 'bg-tmblue-soft',
+    iconColor: 'text-tmblue',
   },
   {
     label: 'GitHub Issues',
-    description: 'Bug reports and feature requests.',
+    subtitle: 'Bug reports & feature requests',
     href: links.issues,
     icon: 'issues',
+    iconBg: 'bg-ink',
+    iconColor: 'text-white',
   },
 ];
 
