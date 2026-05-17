@@ -79,64 +79,39 @@ export const backers = [
 export const features = [
   {
     icon: 'gpu',
-    title: 'GPU-native',
+    title: 'GPU-Native & Differentiable',
     description:
-      'Assemble matrices and run solvers on the same device as your model. No host↔device shuffling, no batched-tensor gymnastics.',
-  },
-  {
-    icon: 'autograd',
-    title: 'Differentiable end-to-end',
-    description:
-      'Autograd flows through assembly, boundary conditions, and the linear solver via adjoint backends. Train networks on FEM solutions directly.',
+      'Built on PyTorch — move the entire FEM workflow to GPU with one line. Autograd flows seamlessly through assembly and solve for end-to-end differentiable PDE pipelines.',
   },
   {
     icon: 'bolt',
-    title: 'JIT-free, eager-first',
+    title: 'Tensorized Assembly',
     description:
-      'Pure eager PyTorch — no compile step, no graph-tracing surprises. Drop a breakpoint anywhere, inspect any tensor.',
+      'A fully tensorized Map-Reduce algorithm powered by TensorGalerkin fuses element-wise ops into monolithic GPU kernels — order-of-magnitude speedups over CPU-based FEM stacks.',
+  },
+  {
+    icon: 'terminal',
+    title: 'JIT-Free & Debugging-Friendly',
+    description:
+      'Eager execution with no compilation overhead. Dynamic meshes, adaptive refinement, and interactive workflows just work — no recompilation latency, no opaque traces.',
+  },
+  {
+    icon: 'elements',
+    title: 'Element & Mesh Support',
+    description:
+      'Triangular, tetrahedral, pyramid, and prismatic elements. Automated mesh generation for common geometries with seamless Gmsh and VTK-HDF5 I/O.',
+  },
+  {
+    icon: 'solvers',
+    title: 'Flexible Solvers',
+    description:
+      'Powered by torch-sla — linear, nonlinear, and eigenvalue solvers across CPU/GPU backends with autograd, batched solves, and multi-GPU scaling.',
   },
   {
     icon: 'python',
     title: 'Pythonic API',
     description:
-      'Write weak forms as plain Python with NumPy-flavored einsum. No DSL, no symbolic engine to learn.',
-  },
-  {
-    icon: 'elements',
-    title: '7 element types · order 4',
-    description:
-      'Lines, triangles, quads, tetrahedra, hexahedra, pyramids, prisms — all supported up to geometric order 4, with mixed meshes out of the box.',
-  },
-  {
-    icon: 'solvers',
-    title: '7 solver backends',
-    description:
-      'SciPy, PyTorch, Eigen, cuDSS, CuPy, PETSc, AMG — swap with one argument to match problem size and hardware.',
-  },
-];
-
-export const getStarted = [
-  {
-    label: 'Install',
-    description:
-      'One pip command and you are running. Optional extras for PETSc, CuPy, and a torch-sla GPU backend.',
-    command: 'pip install tensor-mesh',
-    href: links.docs + '/install.html',
-    cta: 'Install guide →',
-  },
-  {
-    label: 'Read the docs',
-    description:
-      'User guide, API reference, performance benchmarks, and a runnable example gallery — bilingual EN/中文.',
-    href: links.docs,
-    cta: 'Open docs →',
-  },
-  {
-    label: 'Explore examples',
-    description:
-      '20+ runnable examples across Poisson, diffusion, wave, fluid, solid, topology optimization, and distributed assembly.',
-    href: links.examples,
-    cta: 'Open example gallery →',
+      'Custom weak forms in pure Python — no DSL, no form compiler. If you can write PyTorch, you can write FEM.',
   },
 ];
 
@@ -144,48 +119,50 @@ export const getStarted = [
 // M3 — Gallery & Benchmarks data
 // ---------------------------------------------------------------------------
 
+// Order and content kept in lockstep with the README "Examples" table so
+// the landing page and the GitHub README always show the same showcase.
 export const gallery = [
   {
-    src: '/assets/heat.gif',
+    src: '/assets/poisson_3d_half_from_cut.png',
+    kind: 'image' as const,
+    title: '3D Poisson',
+    caption: 'Tetrahedral mesh, cut view of the scalar field.',
+    href: links.docs + '/example_gallery/poisson.html',
+  },
+  {
+    src: '/assets/Allen-Cahn.gif',
     kind: 'animation' as const,
-    title: 'Heat equation',
-    caption: 'Implicit time-stepping on a triangular mesh.',
+    title: 'Allen–Cahn phase field',
+    caption: 'Nonlinear time evolution with Newton iteration per step.',
     href: links.docs + '/example_gallery/diffusion.html',
   },
   {
     src: '/assets/wave.gif',
     kind: 'animation' as const,
     title: 'Wave equation',
-    caption: 'Explicit central-difference scheme.',
+    caption: 'Explicit central-difference time integration.',
     href: links.docs + '/example_gallery/wave.html',
-  },
-  {
-    src: '/assets/allen_cahn.gif',
-    kind: 'animation' as const,
-    title: 'Allen–Cahn phase field',
-    caption: 'Nonlinear diffusion, two phases.',
-    href: links.docs + '/example_gallery/diffusion.html',
   },
   {
     src: '/assets/cavity_results.png',
     kind: 'image' as const,
     title: 'Lid-driven cavity',
-    caption: 'Steady Navier–Stokes at Re = 1000.',
+    caption: 'Incompressible Navier–Stokes; velocity field and streamlines.',
     href: links.docs + '/example_gallery/fluid/index.html',
   },
   {
     src: '/assets/hyperelastic_rubber.png',
     kind: 'image' as const,
     title: 'Hyperelastic rubber',
-    caption: 'Finite-strain Neo-Hookean solid.',
+    caption: 'Large-deformation solid mechanics with a Newton solver.',
     href: links.docs + '/example_gallery/solid/index.html',
   },
   {
-    src: '/assets/poisson_h_adaptivity.png',
-    kind: 'image' as const,
-    title: 'h-adaptive Poisson',
-    caption: 'Mesh refinement driven by error estimator.',
-    href: links.docs + '/example_gallery/poisson.html',
+    src: '/assets/tensormesh_optimization.gif',
+    kind: 'animation' as const,
+    title: 'Topology optimization',
+    caption: 'Compliance minimization via the Optimality Criteria method.',
+    href: links.docs + '/example_gallery/solid/index.html',
   },
 ];
 
