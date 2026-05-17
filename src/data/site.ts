@@ -170,15 +170,16 @@ export const benchmarks = {
   competitors: ['FEniCS', 'Firedrake', 'MFEM', 'scikit-fem', 'JAX-FEM', 'torch-fem'],
   plots: [
     {
-      src: '/assets/comparison_asm_3d_time.png',
-      title: 'Assembly time — 3D Poisson',
+      src: '/assets/all_frameworks_time_combined_poisson_3d.png',
+      title: '3D Poisson — total time vs DOFs',
       caption:
-        'Wall-clock time for stiffness assembly on tetrahedral meshes of increasing size.',
+        'Wall-clock time on tetrahedral meshes for every framework, CPU and CUDA. TensorMesh (CUDA) scales linearly past 10⁶ DOFs.',
     },
     {
-      src: '/assets/comparison_asm_3d_memory.png',
-      title: 'Peak memory — 3D Poisson',
-      caption: 'Resident memory during assembly on the same problems.',
+      src: '/assets/all_frameworks_time_combined_elasticity_3d.png',
+      title: '3D Linear elasticity — total time vs DOFs',
+      caption:
+        'Same comparison on a vector-valued elasticity problem. CUDA backends widen the lead on larger meshes.',
     },
   ],
   fullBenchUrl: links.docs + '/performance/benchmarks.html',
