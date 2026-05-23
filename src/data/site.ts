@@ -16,10 +16,10 @@ export const links = {
   github: 'https://github.com/camlab-ethz/TensorMesh',
   docs: 'https://docs.tensor-mesh.com',
   examples: 'https://docs.tensor-mesh.com/example_gallery/',
-  discord: 'https://discord.gg/qgZhyVh2',
+  discord: 'https://discord.gg/EC9kbHSnrx',
   discussions: 'https://github.com/camlab-ethz/TensorMesh/discussions',
   issues: 'https://github.com/camlab-ethz/TensorMesh/issues',
-  email: 'mailto:tensormesh.dev@gmail.com',
+  email: 'mailto:shizheng.wen@sam.math.ethz.ch',
   benchRepo: 'https://github.com/camlab-ethz/tensormesh-bench',
   license: 'https://github.com/camlab-ethz/TensorMesh/blob/main/LICENSE',
   contributing:
@@ -45,7 +45,7 @@ export const heroPrimaryCTAs = [
 
 export const heroCommandCTAs = [
   {
-    command: 'pip install tensor-mesh',
+    command: 'pip install tensormesh-fem',
     href: links.docs + '/install.html',
   },
   {
@@ -144,13 +144,6 @@ export const gallery = [
     href: links.docs + '/example_gallery/wave.html',
   },
   {
-    src: '/assets/cavity_results.png',
-    kind: 'image' as const,
-    title: 'Lid-driven cavity',
-    caption: 'Incompressible Navier–Stokes; velocity field and streamlines.',
-    href: links.docs + '/example_gallery/fluid/index.html',
-  },
-  {
     src: '/assets/hyperelastic_rubber.png',
     kind: 'image' as const,
     title: 'Hyperelastic rubber',
@@ -158,11 +151,32 @@ export const gallery = [
     href: links.docs + '/example_gallery/solid/index.html',
   },
   {
+    src: '/assets/cavity_results.png',
+    kind: 'image' as const,
+    title: 'Lid-driven cavity',
+    caption: 'Incompressible Navier–Stokes; velocity field and streamlines.',
+    href: links.docs + '/example_gallery/fluid/index.html',
+  },
+  {
+    src: '/assets/magnetostatic_field.png',
+    kind: 'image' as const,
+    title: 'Magnetostatics',
+    caption: '3D magnetic field around a current-carrying wire (stabilized nodal curl–curl).',
+    href: links.docs + '/example_gallery/maxwell.html',
+  },
+  {
     src: '/assets/tensormesh_optimization.gif',
     kind: 'animation' as const,
     title: 'Topology optimization',
     caption: 'Compliance minimization via the Optimality Criteria method.',
     href: links.docs + '/example_gallery/solid/index.html',
+  },
+  {
+    src: '/assets/poisson_galerkin_loss.png',
+    kind: 'image' as const,
+    title: 'Physics-informed learning',
+    caption: 'A network trained to minimize the assembled Galerkin residual.',
+    href: links.docs + '/example_gallery/physics_informed.html',
   },
 ];
 
@@ -215,35 +229,35 @@ b = SourceAssembler.from_mesh(mesh)(point_data={"f": f_vals})
 # 6. Apply Dirichlet BCs via static condensation, then solve.
 condenser = Condenser(mesh.boundary_mask)
 K_, b_ = condenser(K, b)
-u = condenser.recover(K_.solve(b_))
+u = condenser.recover(K_.solve(b_, verbose=True))
 `;
 
 // ---------------------------------------------------------------------------
-// M4 — Examples gallery (8 categories)
+// M4 — Examples gallery (11 categories)
 // ---------------------------------------------------------------------------
 
-// Each category links to its docs section. Counts come from a manual sweep
-// of the examples/ folder; bump them as the gallery grows.
+// Order kept in lockstep with the README "Examples" table. Counts are the
+// number of runnable scripts in each examples/ subfolder; bump as it grows.
 export const exampleCategories = [
   {
     label: 'Basics',
     icon: 'basics',
     description: 'Mesh viz, basis functions, element gallery.',
-    count: '1 example',
+    count: '4 examples',
     href: links.docs + '/example_gallery/basics.html',
   },
   {
     label: 'Poisson',
     icon: 'poisson',
     description: '2D/3D Poisson, batched RHS, h-adaptivity.',
-    count: '3+ examples',
+    count: '3 examples',
     href: links.docs + '/example_gallery/poisson.html',
   },
   {
     label: 'Diffusion',
     icon: 'diffusion',
     description: 'Heat equation and Allen–Cahn phase field.',
-    count: '2 examples',
+    count: '4 examples',
     href: links.docs + '/example_gallery/diffusion.html',
   },
   {
@@ -254,31 +268,52 @@ export const exampleCategories = [
     href: links.docs + '/example_gallery/wave.html',
   },
   {
-    label: 'Fluid',
-    icon: 'fluid',
-    description: 'Lid-driven cavity, cylinder flow, Rayleigh–Bénard, Taylor–Green.',
-    count: '4 examples',
-    href: links.docs + '/example_gallery/fluid/index.html',
-  },
-  {
     label: 'Solid',
     icon: 'solid',
     description: 'Hyperelasticity, contact, plasticity, large deformation.',
-    count: '7 examples',
+    count: '5 examples',
     href: links.docs + '/example_gallery/solid/index.html',
+  },
+  {
+    label: 'Fluid',
+    icon: 'fluid',
+    description: 'Lid-driven cavity, cylinder flow, Rayleigh–Bénard, Taylor–Green.',
+    count: '7 examples',
+    href: links.docs + '/example_gallery/fluid/index.html',
+  },
+  {
+    label: 'Magnetostatics',
+    icon: 'magnetostatics',
+    description: '3D Maxwell — field around a wire via nodal curl–curl.',
+    count: '1 example',
+    href: links.docs + '/example_gallery/maxwell.html',
+  },
+  {
+    label: 'Inverse design',
+    icon: 'inverse',
+    description: 'Coefficient ID and density-based topology optimization, via autograd.',
+    count: '4 examples',
+    href: links.docs + '/example_gallery/inverse_design.html',
+  },
+  {
+    label: 'Physics-informed',
+    icon: 'physics',
+    description: 'Train a network to minimize the assembled Galerkin residual.',
+    count: '1 example',
+    href: links.docs + '/example_gallery/physics_informed.html',
   },
   {
     label: 'Dataset',
     icon: 'dataset',
     description: 'Batch mesh & field generation for ML training.',
-    count: '1 example',
+    count: '3 examples',
     href: links.docs + '/example_gallery/dataset.html',
   },
   {
     label: 'Distributed',
     icon: 'distributed',
     description: 'Multi-GPU assembly and mesh partitioning.',
-    count: '1 example',
+    count: '3 examples',
     href: links.docs + '/example_gallery/distributed.html',
   },
 ];
