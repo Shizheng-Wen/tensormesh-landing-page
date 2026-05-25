@@ -169,7 +169,7 @@ export const gallery = [
     kind: 'animation' as const,
     title: 'Topology optimization',
     caption: 'Compliance minimization via the Optimality Criteria method.',
-    href: links.docs + '/example_gallery/solid/index.html',
+    href: links.docs + '/example_gallery/inverse_design.html',
   },
   {
     src: '/assets/poisson_galerkin_loss.png',
