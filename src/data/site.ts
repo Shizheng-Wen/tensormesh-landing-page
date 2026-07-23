@@ -6,6 +6,13 @@
 export const site = {
   name: 'TensorMesh',
   domain: 'www.tensor-mesh.com',
+  // Browser-tab / search-result title (keep ≤ 60 chars so Google shows it
+  // in full). The suffix disambiguates us from the unrelated AI-inference
+  // company at tensormesh.ai in search results.
+  seoTitle: 'TensorMesh | PyTorch-Native Finite Element Library',
+  // Meta description (~150 chars) shown under the title in search results.
+  seoDescription:
+    'Open-source finite element (FEM) library built on PyTorch — GPU-accelerated assembly, autograd through the solver, 50+ examples. Apache-2.0, by ETH Zürich CAMLab.',
   tagline:
     'A fast, differentiable, JIT-free, debugging-friendly finite element library for PyTorch.',
   shortDescription:
@@ -52,6 +59,21 @@ export const heroCommandCTAs = [
     command: 'git clone https://github.com/camlab-ethz/TensorMesh',
     href: links.github,
   },
+];
+
+// Release badge shown above the hero logo. Update on every release.
+export const heroRelease = {
+  version: 'v0.2.0',
+  summary: 'Mixed multi-field assembly, distributed FEM & open-domain waves',
+  href: links.github + '/releases/tag/v0.2.0',
+};
+
+// Quick-fact strip at the bottom of the hero. Keep to four items.
+export const heroStats = [
+  { value: '50+', label: 'runnable examples' },
+  { value: '11', label: 'problem categories' },
+  { value: '6', label: 'sparse-solver backends' },
+  { value: '10×', label: 'GPU speedup vs CPU FEM' },
 ];
 
 // ---------------------------------------------------------------------------
@@ -119,12 +141,24 @@ export const features = [
 // M3 — Gallery & Benchmarks data
 // ---------------------------------------------------------------------------
 
-// Order and content kept in lockstep with the README "Examples" table so
-// the landing page and the GitHub README always show the same showcase.
+// Bento layout: each row of the lg grid is one `wide: true` card (2 cols —
+// reserved for the panoramic multi-panel figures, aspect ≥ 2:1) plus two
+// normal cards. Keep the W,n,n / n,n,W zigzag when reordering so rows stay
+// balanced. `tag` renders as a small category chip on the image.
 export const gallery = [
+  {
+    src: '/assets/phononic_band_structure.png',
+    kind: 'image' as const,
+    wide: true,
+    tag: 'Wave',
+    title: 'Phononic crystals',
+    caption: 'Bloch–Floquet band structure; mean error 0.08% vs COMSOL.',
+    href: links.docs + '/example_gallery/phononic_crystal.html',
+  },
   {
     src: '/assets/poisson_3d_half_from_cut.png',
     kind: 'image' as const,
+    tag: 'Poisson',
     title: '3D Poisson',
     caption: 'Tetrahedral mesh, cut view of the scalar field.',
     href: links.docs + '/example_gallery/poisson.html',
@@ -132,6 +166,7 @@ export const gallery = [
   {
     src: '/assets/Allen-Cahn.gif',
     kind: 'animation' as const,
+    tag: 'Diffusion',
     title: 'Allen–Cahn phase field',
     caption: 'Nonlinear time evolution with Newton iteration per step.',
     href: links.docs + '/example_gallery/diffusion.html',
@@ -139,6 +174,7 @@ export const gallery = [
   {
     src: '/assets/wave.gif',
     kind: 'animation' as const,
+    tag: 'Wave',
     title: 'Wave equation',
     caption: 'Explicit central-difference time integration.',
     href: links.docs + '/example_gallery/wave.html',
@@ -146,20 +182,41 @@ export const gallery = [
   {
     src: '/assets/hyperelastic_rubber.png',
     kind: 'image' as const,
+    tag: 'Solid',
     title: 'Hyperelastic rubber',
     caption: 'Large-deformation solid mechanics with a Newton solver.',
     href: links.docs + '/example_gallery/solid/index.html',
   },
   {
-    src: '/assets/cavity_results.png',
+    src: '/assets/optical_ring_resonator.png',
     kind: 'image' as const,
-    title: 'Lid-driven cavity',
-    caption: 'Incompressible Navier–Stokes; velocity field and streamlines.',
-    href: links.docs + '/example_gallery/fluid/index.html',
+    wide: true,
+    tag: 'Wave',
+    title: 'Open-domain waves',
+    caption: 'Waveguide-coupled silicon microdisk with PML absorbing layers.',
+    href: links.docs + '/example_gallery/open_domain_wave.html',
+  },
+  {
+    src: '/assets/stokes_taylor_hood.png',
+    kind: 'image' as const,
+    wide: true,
+    tag: 'Fluid',
+    title: 'Taylor–Hood Stokes',
+    caption: 'Stabilization-free mixed P2–P1 assembly with optimal convergence.',
+    href: links.docs + '/example_gallery/fluid/stokes_taylor_hood.html',
+  },
+  {
+    src: '/assets/vibration_cylinder_modes.png',
+    kind: 'image' as const,
+    tag: 'Solid',
+    title: 'Modal analysis',
+    caption: 'Natural frequencies and mode shapes of a cantilever cylinder.',
+    href: links.docs + '/example_gallery/modal_analysis.html',
   },
   {
     src: '/assets/magnetostatic_field.png',
     kind: 'image' as const,
+    tag: 'Maxwell',
     title: 'Magnetostatics',
     caption: '3D magnetic field around a current-carrying wire (stabilized nodal curl–curl).',
     href: links.docs + '/example_gallery/maxwell.html',
@@ -167,6 +224,7 @@ export const gallery = [
   {
     src: '/assets/tensormesh_optimization.gif',
     kind: 'animation' as const,
+    tag: 'Inverse design',
     title: 'Topology optimization',
     caption: 'Compliance minimization via the Optimality Criteria method.',
     href: links.docs + '/example_gallery/inverse_design.html',
@@ -174,26 +232,43 @@ export const gallery = [
   {
     src: '/assets/poisson_galerkin_loss.png',
     kind: 'image' as const,
+    tag: 'ML',
     title: 'Physics-informed learning',
     caption: 'A network trained to minimize the assembled Galerkin residual.',
     href: links.docs + '/example_gallery/physics_informed.html',
+  },
+  {
+    src: '/assets/cavity_results.png',
+    kind: 'image' as const,
+    wide: true,
+    tag: 'Fluid',
+    title: 'Lid-driven cavity',
+    caption: 'Incompressible Navier–Stokes with Taylor–Hood (P2–P1) mixed elements.',
+    href: links.docs + '/example_gallery/fluid/index.html',
   },
 ];
 
 export const benchmarks = {
   competitors: ['FEniCS', 'Firedrake', 'MFEM', 'scikit-fem', 'JAX-FEM', 'torch-fem'],
+  // Each card pairs the solved field (`vis`, PyVista render — what was
+  // computed) with the timing plot (`src` — how fast). Same figures as
+  // docs/performance/benchmarks.html.
   plots: [
     {
       src: '/assets/all_frameworks_time_combined_poisson_3d.png',
+      vis: '/assets/benchmark_vis_poisson_3d.webp',
+      visAlt: 'Solved 3D Poisson field on a tetrahedral mesh (PyVista render)',
       title: '3D Poisson — total time vs DOFs',
       caption:
-        'Wall-clock time on tetrahedral meshes for every framework, CPU and CUDA. TensorMesh (CUDA) scales linearly past 10⁶ DOFs.',
+        'Left: the solved field on the tetrahedral benchmark mesh. Right: wall-clock time for every framework, CPU and CUDA — TensorMesh (CUDA) scales linearly past 10⁶ DOFs.',
     },
     {
       src: '/assets/all_frameworks_time_combined_elasticity_3d.png',
+      vis: '/assets/benchmark_vis_elasticity_3d.webp',
+      visAlt: 'Solved 3D elasticity displacement field with fixed supports and surface traction',
       title: '3D Linear elasticity — total time vs DOFs',
       caption:
-        'Same comparison on a vector-valued elasticity problem. CUDA backends widen the lead on larger meshes.',
+        'Left: displacement magnitude under surface traction with fixed supports. Right: the same timing comparison on this vector-valued problem — CUDA backends widen the lead on larger meshes.',
     },
   ],
   fullBenchUrl: links.docs + '/performance/benchmarks.html',
@@ -257,28 +332,28 @@ export const exampleCategories = [
     label: 'Diffusion',
     icon: 'diffusion',
     description: 'Heat equation and Allen–Cahn phase field.',
-    count: '4 examples',
+    count: '5 examples',
     href: links.docs + '/example_gallery/diffusion.html',
   },
   {
     label: 'Wave',
     icon: 'wave',
-    description: 'Explicit central-difference time integration.',
-    count: '1 example',
+    description: 'Time-domain wave, Helmholtz, phononic band structures, PML & ports.',
+    count: '8 examples',
     href: links.docs + '/example_gallery/wave.html',
   },
   {
     label: 'Solid',
     icon: 'solid',
-    description: 'Hyperelasticity, contact, plasticity, large deformation.',
-    count: '5 examples',
+    description: 'Hyperelasticity, contact, plasticity, geomechanics, modal analysis.',
+    count: '9 examples',
     href: links.docs + '/example_gallery/solid/index.html',
   },
   {
     label: 'Fluid',
     icon: 'fluid',
-    description: 'Lid-driven cavity, cylinder flow, Rayleigh–Bénard, Taylor–Green.',
-    count: '7 examples',
+    description: 'Taylor–Hood Stokes, lid-driven cavity, cylinder flow, Rayleigh–Bénard, Taylor–Green.',
+    count: '8 examples',
     href: links.docs + '/example_gallery/fluid/index.html',
   },
   {
@@ -312,9 +387,11 @@ export const exampleCategories = [
   {
     label: 'Distributed',
     icon: 'distributed',
-    description: 'Multi-GPU assembly and mesh partitioning.',
-    count: '3 examples',
-    href: links.docs + '/example_gallery/distributed.html',
+    description: 'Multi-GPU assembly, mesh partitioning, graph coloring.',
+    count: '4 examples',
+    // The gallery chapter returns once the multi-GPU runs are published;
+    // until then the user-guide chapter is the canonical reference.
+    href: links.docs + '/user_guide/distributed.html',
   },
 ];
 
@@ -376,6 +453,7 @@ export const footerLinks = [
     items: [
       { label: 'Examples', href: links.examples },
       { label: 'Benchmarks', href: links.benchRepo },
+      { label: 'Releases', href: links.github + '/releases' },
       { label: 'Contributing', href: links.contributing },
     ],
   },

@@ -7,7 +7,7 @@ import '@fontsource/jetbrains-mono/400.css';
 import '@fontsource/jetbrains-mono/500.css';
 
 import '../styles/global.css';
-import { site } from '../data/site';
+import { site, links } from '../data/site';
 import TopNav from '../components/TopNav.astro';
 
 interface Props {
@@ -16,12 +16,35 @@ interface Props {
 }
 
 const {
-  title = site.name,
-  description = site.tagline,
+  title = site.seoTitle,
+  description = site.seoDescription,
 } = Astro.props;
 
-const pageTitle = title === site.name ? site.name : `${title} · ${site.name}`;
+// The homepage keeps the full SEO title; subpages get "Page · TensorMesh".
+const pageTitle = title === site.seoTitle ? site.seoTitle : `${title} · ${site.name}`;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? `https://${site.domain}`);
+
+// Structured data so search engines understand what TensorMesh is (an
+// open-source scientific-computing library, not the unrelated AI-inference
+// company with a similar name).
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'TensorMesh',
+  alternateName: 'tensormesh-fem',
+  description: site.seoDescription,
+  url: `https://${site.domain}`,
+  applicationCategory: 'DeveloperApplication',
+  operatingSystem: 'Linux, macOS, Windows',
+  license: 'https://www.apache.org/licenses/LICENSE-2.0',
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  sameAs: [links.github, links.docs],
+  author: {
+    '@type': 'Organization',
+    name: 'CAMLab, ETH Zürich',
+    url: 'https://camlab.ethz.ch/',
+  },
+};
 ---
 
 <!doctype html>
@@ -36,6 +59,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? `https://${site.doma
     <link rel="canonical" href={canonical.toString()} />
     <link rel="icon" type="image/png" href="/favicon.png" />
 
+    <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
@@ -47,11 +71,37 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? `https://${site.doma
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content="/og-image.png" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body class="min-h-screen flex flex-col bg-surface text-ink">
     <TopNav />
     <main class="flex-1">
       <slot />
     </main>
+
+    <script>
+      // Reveal-on-scroll. The `js` root class gates the initial hidden state
+      // (see global.css) so content is never hidden when JS doesn't run.
+      document.documentElement.classList.add('js');
+
+      const targets = document.querySelectorAll('[data-reveal]');
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+              }
+            }
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -40px 0px' },
+        );
+        targets.forEach((el) => observer.observe(el));
+      } else {
+        targets.forEach((el) => el.classList.add('is-visible'));
+      }
+    </script>
   </body>
 </html>
