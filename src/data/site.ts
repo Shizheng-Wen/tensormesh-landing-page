@@ -63,9 +63,9 @@ export const heroCommandCTAs = [
 
 // Release badge shown above the hero logo. Update on every release.
 export const heroRelease = {
-  version: 'v0.2.0',
-  summary: 'Mixed multi-field assembly, distributed FEM & open-domain waves',
-  href: links.github + '/releases/tag/v0.2.0',
+  version: 'v0.2.1',
+  summary: 'Correct boundary masks, hollow meshes & a loud reorder check',
+  href: links.github + '/releases/tag/v0.2.1',
 };
 
 // Quick-fact strip at the bottom of the hero. Keep to four items.
